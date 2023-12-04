@@ -105,7 +105,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 }
 
 func enableCors(w *http.ResponseWriter) {
-(*w).Header().Set("Access-Control-Allow-Origin", "https://xfy.onrender.com/")
+(*w).Header().Set("Access-Control-Allow-Origin", "https://xfy.onrender.com")
 }
 
 func renderError(w http.ResponseWriter, message string, statusCode int) {

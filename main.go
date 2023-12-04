@@ -20,10 +20,12 @@ const MAX_UPLOAD_SIZE = 10 * 1024 * 1024 // 1MB
 var uploadPath = "./giants"
 
 func Status(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
 	fmt.Fprintf(w,"Online and Eating")
 }
 
 func Index(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
 	if r.Method != "POST" {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
@@ -101,7 +103,13 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(jsonStr)
 	fmt.Fprintf(w, jsonStr)
 }
+
+func enableCors(w *http.ResponseWriter) {
+(*w).Header().Set("Access-Control-Allow-Origin", "https://xfy.onrender.com/")
+}
+
 func renderError(w http.ResponseWriter, message string, statusCode int) {
+	enableCors(&w)
 	w.WriteHeader(statusCode)
 	w.Write([]byte(message))
 }

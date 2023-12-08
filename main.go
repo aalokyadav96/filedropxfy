@@ -32,6 +32,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	//~ }
 	if r.Method == "OPTIONS" {
 		fmt.Fprintf(w,"200")
+		return
 	} 
 	
 	r.Body = http.MaxBytesReader(w, r.Body, MAX_UPLOAD_SIZE)
@@ -39,7 +40,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "The uploaded file is too big. Please choose an file that's less than 10MB in size", http.StatusBadRequest)
 	}
 	fmt.Println("Key :  ", r.FormValue("key"))
-	fmt.Println(r.Body)
+	//~ fmt.Println(r.Body)
 	ffile, fileHeader, err := r.FormFile("file")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)

@@ -26,11 +26,14 @@ func Status(w http.ResponseWriter, r *http.Request) {
 
 func Index(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
-	if r.Method != "POST" {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
-		return
-	}
-
+	//~ if r.Method != "POST" {
+		//~ http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		//~ return
+	//~ }
+	if r.Method == "OPTIONS" {
+		fmt.Fprintf(w,"200")
+	} 
+	
 	r.Body = http.MaxBytesReader(w, r.Body, MAX_UPLOAD_SIZE)
 	if err := r.ParseMultipartForm(MAX_UPLOAD_SIZE); err != nil {
 		http.Error(w, "The uploaded file is too big. Please choose an file that's less than 10MB in size", http.StatusBadRequest)

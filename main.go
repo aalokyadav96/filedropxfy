@@ -35,6 +35,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		return
 	} 
 	
+	if r.Method == "POST" {
 	r.Body = http.MaxBytesReader(w, r.Body, MAX_UPLOAD_SIZE)
 	if err := r.ParseMultipartForm(MAX_UPLOAD_SIZE); err != nil {
 		http.Error(w, "The uploaded file is too big. Please choose an file that's less than 10MB in size", http.StatusBadRequest)
@@ -106,6 +107,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	var jsonStr = "{\"task\":\"encoding\",\"time\":\"10\"}"
 	fmt.Println(jsonStr)
 	fmt.Fprintf(w, jsonStr)
+	} 
 }
 
 func enableCors(w *http.ResponseWriter) {
